@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerFreeMove : MonoBehaviour
 {
@@ -10,12 +11,19 @@ public class PlayerFreeMove : MonoBehaviour
     public float gravity;
     public float speedZ;
     public float speedJump;
+
+    private InputAction _moveAction;
+    private InputAction _jumpAction;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //コンポーネント取得
         controller = GetComponent<CharacterController>();
         //animator = animatorBody.GetComponent<Animator>();
+        InputActionMap actionMap = GetComponent<PlayerInput>().currentActionMap;//PlayerInputコンポーネントに設定されている現マップを取得する
+        _moveAction = actionMap.FindAction("Move");
+        _jumpAction = actionMap.FindAction("Jump");
     }
 
     // Update is called once per frame
@@ -24,17 +32,21 @@ public class PlayerFreeMove : MonoBehaviour
         if (controller.isGrounded)
         {
             //キャラクターコントローラーや入力関連はアップデートに書いた方が安定する
-            if (Input.GetAxis("Vertical") != 0f)
+            //if (Input.GetAxis("Vertical") != 0f)
+             if (_moveAction.ReadValue<Vector2>().y != 0f)
             {
-                moveDirection.z = Input.GetAxis("Vertical") * speedZ;
+                //moveDirection.z = Input.GetAxis("Vertical") * speedZ;
+                moveDirection.z = _moveAction.ReadValue<Vector2>().y * speedZ;
             }
             else
             {
                 moveDirection.z = 0;
             }
-            transform.Rotate(0, Input.GetAxis("Horizontal") * 3, 0);
+            //transform.Rotate(0, Input.GetAxis("Horizontal") * 3, 0);
+            transform.Rotate(0, _moveAction.ReadValue<Vector2>().y * 3, 0);
 
-            if (Input.GetButton("Jump"))
+                //if (Input.GetButton("Jump"))
+                if(_jumpAction.IsPressed())
             {
                 moveDirection.y = speedJump;
                 //animator.SetTrigger("jump");
