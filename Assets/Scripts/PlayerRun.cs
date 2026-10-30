@@ -19,7 +19,7 @@ public class PlayerRun : MonoBehaviour
     public float speedX;
     public float speedJump;
 
-    [Header("全身加速力")]
+    [Header("前進加速力")]
     public float accelerationZ = 10.0f;
 
     Coroutine resetIntervalCol;//インプットインターバルを置くための変数
