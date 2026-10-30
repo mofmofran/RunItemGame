@@ -56,6 +56,11 @@ public class PlayerRun : MonoBehaviour
             //}
             //transform.Rotate(0, Input.GetAxis("Horizontal") * 3, 0);
             //transform.Rotate(0, _moveAction.ReadValue<Vector2>().x * 3, 0);
+            
+            //徐々に加速しZ方向に前進させる
+            float acceleratedZ = moveDirection.z+(accelerationZ*Time.deltaTime);
+            moveDirection.z = Mathf.Clamp(acceleratedZ, 0, speedZ);//Clamp(変数,下限,上限)
+
             if (resetIntervalCol == null)//コルーチンが発動していない時だけ
             {
                 if (_moveAction.ReadValue<Vector2>().x < 0)MoveToLeft();
@@ -64,7 +69,7 @@ public class PlayerRun : MonoBehaviour
               
             }
             float ratioX = (_targetLane * LaneWidth - transform.position.x) / LaneWidth;
-            moveDirection.x += ratioX *speedX;
+            moveDirection.x = ratioX *speedX;
 
             //if (Input.GetButton("Jump"))
             if (_jumpAction.IsPressed())
@@ -106,5 +111,14 @@ public class PlayerRun : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);//0.1秒待ってから
         resetIntervalCol = null;//コルーチン発動中である証明だった変数を解放
+    }
+    public void Jump()
+    {
+        if(controller.isGrounded)
+        {
+            moveDirection.y = speedJump;
+            //ジャンプトリガー設定
+            //animator.SetTriger("Jump");
+        }
     }
 }
