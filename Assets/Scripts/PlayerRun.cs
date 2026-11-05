@@ -47,6 +47,60 @@ public class PlayerRun : MonoBehaviour
         return _recoverTime > 0.0f || _life <= 0;//リカバータイムがある時かライフがゼロ以下の時
     }
 
+    public void MoveToLeft()
+    {
+        if (IsStun()) return;
+        if (_targetLane > MinLane)
+        {
+            _targetLane--;
+            resetIntervalCol = StartCoroutine(ResetIntervalCol());
+        }
+    }
+    public void MoveToRight()
+    {
+        if (IsStun()) return;
+        if (_targetLane < MaxLane)
+        {
+            _targetLane++;
+            resetIntervalCol = StartCoroutine(ResetIntervalCol());
+        }
+    }
+    //特定の時間(インターバル)だけ入力を待つコルーチン
+    IEnumerator ResetIntervalCol()
+    {
+        yield return new WaitForSeconds(0.1f);//0.1秒待ってから
+        resetIntervalCol = null;//コルーチン発動中である証明だった変数を解放
+    }
+
+    public void Jump()
+    {
+        if (IsStun()) return;
+        if (controller.isGrounded)
+        {
+            _moveDirection.y = speedJump;
+            //ジャンプトリガー設定
+            //animator.SetTriger("Jump");
+        }
+    }
+
+    //CharacterControllerに衝突判定が生じた時の処理
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (IsStun()) return;
+
+        if (hit.gameObject.tag == "Enemy")
+        {
+            //ライフを減らしてノックバックさせスタンさせる
+            LifeDown();//ライフ減少メソッド
+            _moveDirection.z = knockBackForceZ;//ノックバックさせる
+            _recoverTime = StunDuration;//スタン時間をリカバータイムに代入
+            Debug.Log("HIT");
+        }
+    }
+    public void LifeDown()//Life減少メソッド
+    {
+        _life--;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,6 +116,22 @@ public class PlayerRun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsStun())//ダメージ中
+        {
+            float val = Mathf.Sin(Time.time * 50);//点滅させる
+            if (val > 0)
+            {
+                animatorBody.GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                animatorBody.GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+        else
+        {
+            animatorBody.GetComponent<MeshRenderer>().enabled = true;
+        }
         //入力検知系はアップデートに書いた方が良い
         //CharacterControllerコンポーネントが接地判断をもっている
         //入力検知は地面にいる時
@@ -136,58 +206,5 @@ public class PlayerRun : MonoBehaviour
         //アニメの制御
         //animator.SetBool("run", moveDirection.z != 0.0f);
     }
-    public void MoveToLeft()
-    {
-        if (IsStun()) return;
-        if (_targetLane > MinLane)
-        {
-            _targetLane--;
-            resetIntervalCol = StartCoroutine(ResetIntervalCol());
-        }
-    }
-    public void MoveToRight()
-    {
-        if (IsStun()) return;
-        if (_targetLane < MaxLane)
-        {
-            _targetLane++;
-            resetIntervalCol = StartCoroutine(ResetIntervalCol());
-        }
-    }
-
-    //特定の時間(インターバル)だけ入力を待つコルーチン
-    IEnumerator ResetIntervalCol()
-    {
-        yield return new WaitForSeconds(0.1f);//0.1秒待ってから
-        resetIntervalCol = null;//コルーチン発動中である証明だった変数を解放
-    }
-    public void Jump()
-    {
-        if (IsStun()) return;
-        if (controller.isGrounded)
-        {
-            _moveDirection.y = speedJump;
-            //ジャンプトリガー設定
-            //animator.SetTriger("Jump");
-        }
-    }
-
-    //CharacterControllerに衝突判定が生じた時の処理
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (IsStun()) return;
-
-        if (hit.gameObject.tag == "Enemy")
-        {
-            //ライフを減らしてノックバックさせスタンさせる
-            LifeDown();//ライフ減少メソッド
-            _moveDirection.z = knockBackForceZ;//ノックバックさせる
-            _recoverTime = StunDuration;//スタン時間をリカバータイムに代入
-            Debug.Log("HIT");
-        }
-    }
-    public void LifeDown()//Life減少メソッド
-    {
-        _life--;
-    }
+   
 }

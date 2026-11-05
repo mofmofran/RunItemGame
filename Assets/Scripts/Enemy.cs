@@ -7,6 +7,16 @@ public class Enemy : MonoBehaviour
     public GameObject enemyBody;
     public float freezeTime =1.0f;
     Coroutine _damageStart;
+    public GameObject effectObject; 
+
+
+    void CreateEffect()
+    {
+        Instantiate(
+            effectObject,
+            transform.position,
+            Quaternion.identity);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,8 +47,17 @@ public class Enemy : MonoBehaviour
             if (other.gameObject.tag == "Bullet")//それがBulletならLifeを減らす
             {
                 _enemyLife--;
-                if (_enemyLife <= 0) Destroy(gameObject);//Lifeが0なら消滅
+                if (_enemyLife <= 0)
+                { 
+                    Destroy(gameObject);
+                    CreateEffect(); 
+                }//Lifeが0なら消滅
                 else _damageStart = StartCoroutine(DamageStart());//そうでなければDamageStartコルーチン
+            }
+            else if (other.gameObject.tag == "Slash")
+            {
+                Destroy(this.gameObject);
+                CreateEffect();
             }
         }
     }
