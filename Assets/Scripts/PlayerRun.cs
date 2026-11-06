@@ -99,7 +99,27 @@ public class PlayerRun : MonoBehaviour
     }
     public void LifeDown()//Life減少メソッド
     {
-        _life--;
+        _life--; 
+        //UIControllerを探して、ライフ更新メソッド
+        UIController controller = GameObject.FindAnyObjectByType<UIController>();
+        controller.UpdateLife();
+
+        //ライフが0以下になったら
+        if (_life <= 0)
+        {
+            //ステータス変更
+            GameManager.gameState = GameState.GameOver;
+        }
+    }
+
+    //Life回復メソッド
+    public void RecoverLife(int val)
+    {
+        _life += val;
+        if (_life >= DefaultLife) _life = DefaultLife;
+        //UIControllerを探して、ライフ更新メソッド
+        UIController controller = GameObject.FindAnyObjectByType<UIController>();
+        controller.UpdateLife();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -121,16 +141,16 @@ public class PlayerRun : MonoBehaviour
             float val = Mathf.Sin(Time.time * 50);//点滅させる
             if (val > 0)
             {
-                animatorBody.GetComponent<MeshRenderer>().enabled = true;
+                animatorBody.SetActive(true);
             }
             else
             {
-                animatorBody.GetComponent<MeshRenderer>().enabled = false;
+                animatorBody.SetActive(false);
             }
         }
         else
         {
-            animatorBody.GetComponent<MeshRenderer>().enabled = true;
+            animatorBody.SetActive(true);
         }
         //入力検知系はアップデートに書いた方が良い
         //CharacterControllerコンポーネントが接地判断をもっている

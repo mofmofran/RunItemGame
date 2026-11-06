@@ -2,25 +2,41 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Vector3 diff;
-    GameObject player;
-    public float followSpeed;
+    Vector3 diff; //対象とカメラの維持するべき距離
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //public GameObject target; //カメラの対象（Player）
+    GameObject player;
+
+    public float followSpeed = 5.0f; //追従スピード
+
+    [Header("カメラの初期位置")]
+    public Vector3 startPos = new Vector3(0, 4.5f, -7.5f);
+    public Quaternion startRot = Quaternion.Euler(15.5f, 0, 0);
+
     void Start()
     {
+        //カメラの初期位置の設定
+        transform.position = startPos;
+        transform.rotation = startRot;
+
+        //playerタグがついているオブジェクトを探す
         player = GameObject.FindGameObjectWithTag("Player");
-        diff = player.transform.position - transform.position;  //維持する距離を定義する
+
+        //diff = target.transform.position - transform.position; //最初に維持するべき距離を定義
+        diff = player.transform.position - transform.position; //最初に維持するべき距離を定義
     }
 
-    // Update is called once per frame
+    //Playerが動いた(Update・FixedUpdate)後に実行される
     void LateUpdate()
     {
-        //現在地から目的地にどんどん詰めていき、最終的に近づき続ける。
-        //イコールにはならないが描画上は止まっているかのように表現される
+        //現地点A→目的地Bに向けて収束していく
+        //現地点Aの位置はどんどん詰めていくのでやがて限りなくイコールに近い距離になってくる
+        //最終的には限りなく近づき続けるだけでイコールにはならないが、描画上は完全に止まっているかのように表現される
         transform.position = Vector3.Lerp(
-            transform.position,//現在地
-            player.transform.position-diff,//目標の位置から維持する距離を引いた数値
-            Time.deltaTime*followSpeed );//前フレームからの時間にfollowSpeedを掛けた進捗率を出す
+            transform.position, //現時点A
+                                //target.transform.position - diff, //目的地B
+            player.transform.position - diff, //目的地B
+            Time.deltaTime * followSpeed //A→Bへの進行に対して、どれだけ進んだ位置にいるべきかの進捗率
+            );
     }
 }

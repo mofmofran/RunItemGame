@@ -30,6 +30,9 @@ public class PlayerShooter : MonoBehaviour
     public void AddBullet(int num)//弾数を回復するメソッド
     {
         _bulletRemaining += num;
+        //UIControllerを探して、残弾更新メソッド
+        UIController controller = GameObject.FindAnyObjectByType<UIController>();
+        controller.UpdateBullet();
     }
 
     void Start()
@@ -58,6 +61,9 @@ public class PlayerShooter : MonoBehaviour
             Rigidbody rbody = obj.GetComponent<Rigidbody>();
             rbody.AddForce(new Vector3(0, 0, bulletSpeed), ForceMode.Impulse);
             _bulletRemaining--;
+            //UIControllerを探して、残弾更新メソッド
+            UIController controller = GameObject.FindAnyObjectByType<UIController>();
+            controller.UpdateBullet();
             //インターバルとなるコルーチンの開始
             _shootStart = StartCoroutine(ShootStart());
         }
