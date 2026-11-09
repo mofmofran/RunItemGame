@@ -40,24 +40,31 @@ public class Enemy : MonoBehaviour
             return;
         }
     }
-    private void OnTriggerEnter(Collider other)//何かに当たったら
+    private void OnTriggerEnter(Collider other)
     {
-        if (_damageStart == null)//ダメージ中でなければ
+        //ダメージコルーチンが発動していなければ（ダメージ中でなければ）
+        if (_damageStart == null)
         {
-            if (other.gameObject.tag == "Bullet")//それがBulletならLifeを減らす
+            //ぶつかった相手がBulletなら
+            if (other.gameObject.tag == "Bullet")
             {
-                _enemyLife--;
+                _enemyLife--; //体力が1減る
                 if (_enemyLife <= 0)
-                { 
-                    Destroy(gameObject);
-                    CreateEffect(); 
-                }//Lifeが0なら消滅
-                else _damageStart = StartCoroutine(DamageStart());//そうでなければDamageStartコルーチン
+                {
+                    CreateEffect();
+                    Destroy(gameObject); //消滅
+                }
+                else //体力が残っていれば
+                {
+                    _damageStart = StartCoroutine(DamageStart()); //コルーチンの発動
+                }
             }
+            //ぶつかった相手がSlashなら即撃破
             else if (other.gameObject.tag == "Slash")
             {
-                Destroy(this.gameObject);
                 CreateEffect();
+                Destroy(gameObject);
+                Debug.Log("Slash!");
             }
         }
     }

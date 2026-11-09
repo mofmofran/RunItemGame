@@ -556,7 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7280178304754336704}
   - component: {fileID: 5811865577813376247}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Slash
   m_TagString: Slash
   m_Icon: {fileID: 0}
@@ -935,9 +935,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1818488343670424439, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837305093315562307, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5503505460791601945, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
       propertyPath: m_Name
       value: Basic Slash Blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503505460791601945, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7364936370289906279, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
       propertyPath: simulationSpeed
@@ -962,6 +974,10 @@ PrefabInstance:
     - target: {fileID: 7364936370289906279, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 8373613166400002822, guid: 74c549d1b06b6b140a1fd9536eea637f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
