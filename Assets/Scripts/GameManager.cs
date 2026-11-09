@@ -57,5 +57,22 @@ public class GameManager : MonoBehaviour
 
             cameras[1].Priority = 2;
         }
+        if (gameState == GameState.GameClear)
+        {
+            Debug.Log("GameClear");
+            //UIControllerを探し出してゲームオーバー用のUI表示命令
+            UIController contoller = GameObject.FindAnyObjectByType<UIController>();
+            contoller.GameClearDisplay();
+
+            //_mixingCamera.SetActive(true); //mixingカメラを復活
+            Camera.main.GetComponent<CinemachineBrain>().enabled = true;//ブレインを復活
+
+            playableDirector.Play();
+            StartCoroutine(GameOverCamera());
+
+
+            gameState = GameState.GameEnd;
+            Debug.Log("GameEnd");
+        }
     }
 }

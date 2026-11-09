@@ -11,8 +11,8 @@ public class TalkManager : MonoBehaviour
 
     //UI側のパーツ
     public GameObject talkPanel;
-    public TextMeshPro nameText;
-    public TextMeshPro messageText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI messageText;
     public Image faceImage;
     public string nextScene;//次のシーン名
     public float textSpeed = 0.2f;//メッセージ速度

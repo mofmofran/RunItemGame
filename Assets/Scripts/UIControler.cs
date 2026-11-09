@@ -20,6 +20,10 @@ public class UIController : MonoBehaviour
     //ボタン関連
     public GameObject buttonPanel;
     public GameObject retryButton;
+    public GameObject nextButton;
+
+    //シーン関連
+    public string nextScene;
 
     //メソッド関連
 
@@ -55,6 +59,7 @@ public class UIController : MonoBehaviour
     public void GameOverDisplay()//ゲームオーバー時、GameManagerから呼び出されるメソッド
     {
         buttonPanel.SetActive(true); //ボタンの表示
+        retryButton.SetActive(true);
         //ステータス「GAME OVER」の表示
         statusText.SetActive(true);
         statusText.GetComponent<TextMeshProUGUI>().text = "GAME OVER";
@@ -63,10 +68,25 @@ public class UIController : MonoBehaviour
         bulletPanel.SetActive(false); //Bulletパネルの非表示
     }
 
+    public void GameClearDisplay()
+    {
+        buttonPanel.SetActive(true); //ボタンの表示
+        nextButton.SetActive(true);
+        //ステータス「GAME Clear」の表示
+        statusText.SetActive(true);
+        statusText.GetComponent<TextMeshProUGUI>().text = "GAME CLEAR";
+
+        sliderPanel.SetActive(false); //スライダーパネルの非表示
+        bulletPanel.SetActive(false); //Bulletパネルの非表示
+
+    }
+
     void Start()
     {
         //ボタンを非表示
         buttonPanel.SetActive(false);
+        retryButton.SetActive(false);
+        nextButton.SetActive(false);
 
         //時間差でステータス文字を非表示
         StartCoroutine(DisplayChange());
