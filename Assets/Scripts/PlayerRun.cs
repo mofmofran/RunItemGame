@@ -7,7 +7,7 @@ public class PlayerRun : MonoBehaviour
 {
     const int MinLane = -2;
     const int MaxLane = 2;
-    const float LaneWidth = 1f;
+    const float LaneWidth = 2f;
 
     const int DefaultLife = 3;//デフォルト最大体力
     const float StunDuration = 0.5f;//スタン時間
@@ -18,6 +18,7 @@ public class PlayerRun : MonoBehaviour
     private int _targetLane;
 
     int _life = DefaultLife;//現在HP
+    int _maxLife;//最大HP
     float _recoverTime = 0.0f;//硬直カウントダウン
 
     [Header("重力・前進・横移動・ジャンプ")]
@@ -78,6 +79,7 @@ public class PlayerRun : MonoBehaviour
         if (controller.isGrounded)
         {
             _moveDirection.y = speedJump;
+            _moveDirection.x = 0;
             //ジャンプトリガー設定
             //animator.SetTriger("Jump");
         }
@@ -116,7 +118,7 @@ public class PlayerRun : MonoBehaviour
     public void RecoverLife(int val)
     {
         _life += val;
-        if (_life >= DefaultLife) _life = DefaultLife;
+        if (_life >= _maxLife) _life = _maxLife;
         //UIControllerを探して、ライフ更新メソッド
         UIController controller = GameObject.FindAnyObjectByType<UIController>();
         controller.UpdateLife();
@@ -131,11 +133,21 @@ public class PlayerRun : MonoBehaviour
         InputActionMap actionMap = GetComponent<PlayerInput>().currentActionMap;//PlayerInputコンポーネントに設定されている現マップを取得する
         _moveAction = actionMap.FindAction("Move");
         _jumpAction = actionMap.FindAction("Jump");
+        if (GameData.HasUpgrade(UpgradeType.LifeUp))
+        {
+            _maxLife += GameData.GetValue(UpgradeType.LifeUp);
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.gameState == GameState.GameClear)
+        {
+            _moveDirection.z = 0;
+
+        }
         if (IsStun())//ダメージ中
         {
             float val = Mathf.Sin(Time.time * 50);//点滅させる
@@ -188,7 +200,7 @@ public class PlayerRun : MonoBehaviour
 
                 _recoverTime -= Time.deltaTime; //カウントダウンする
             }
-            else
+            else if(GameManager.gameState==GameState.IsPlay)
             {
                 //対象とするレーンをもとにmoveDirectionのX(横移動)を決める
                 float ratioX = (_targetLane * LaneWidth - transform.position.x) / LaneWidth;

@@ -42,6 +42,11 @@ public class PlayerShooter : MonoBehaviour
         //現マップ上にいる「Attack」というアクションを取得
         _shootAction = actionMap.FindAction("Attack");
         _gateTransform = transform.Find("Gate");
+
+        if (GameData.HasUpgrade(UpgradeType.BulletUp))
+        {
+            _bulletRemaining =  GameData.GetValue(UpgradeType.BulletUp);
+        }
     }
 
     // Update is called once per frame

@@ -11,6 +11,10 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (GameData.HasUpgrade(UpgradeType.PierceBullet))
+        {
+            return;
+        }
         if (collision.gameObject.tag == "Enemy")
         {
             Destroy(this.gameObject);
@@ -18,6 +22,10 @@ public class BulletController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (GameData.HasUpgrade(UpgradeType.PierceBullet))
+        {
+            return;
+        }
         Destroy(this.gameObject);
     }
     // Update is called once per frame

@@ -822,9 +822,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRun
   animatorBody: {fileID: 2583344435081309437}
   gravity: 0.15
-  speedZ: 2
+  speedZ: 5
   speedX: 2
-  speedJump: 12
+  speedJump: 10
   accelerationZ: 10
   knockBackForceZ: -6
 --- !u!114 &5823561064388233596

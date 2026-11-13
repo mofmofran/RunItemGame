@@ -299,7 +299,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 246030045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1500725274}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &246030045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2193,7 +2205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1387809021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1500725274}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1387809021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2492,7 +2516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RETRY
+  m_text: NEXT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3121,6 +3145,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3595380278024254577, guid: a11be801432e30944ae926cdb606742c, type: 3}
+      propertyPath: spawnRate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3595380278024254577, guid: a11be801432e30944ae926cdb606742c, type: 3}
+      propertyPath: itemPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3595380278024254577, guid: a11be801432e30944ae926cdb606742c, type: 3}
+      propertyPath: 'itemPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2770130061849207032, guid: f76081cb954aeb54a972a0471fdb3641, type: 3}
     - target: {fileID: 5434530801202074714, guid: a11be801432e30944ae926cdb606742c, type: 3}
       propertyPath: m_Name
       value: DefaultStage 0
@@ -3177,10 +3213,6 @@ PrefabInstance:
     - target: {fileID: 2296716428004865978, guid: b9db906118503d347ad831d2b76e0c89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3291045574825777352, guid: b9db906118503d347ad831d2b76e0c89, type: 3}
-      propertyPath: m_TagString
-      value: Slash
       objectReference: {fileID: 0}
     - target: {fileID: 7440413727906850661, guid: b9db906118503d347ad831d2b76e0c89, type: 3}
       propertyPath: m_Name

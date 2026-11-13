@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.GameClear)
         {
             Debug.Log("GameClear");
-            //UIControllerを探し出してゲームオーバー用のUI表示命令
+            //UIControllerを探し出してゲームクリア用のUI表示命令
             UIController contoller = GameObject.FindAnyObjectByType<UIController>();
             contoller.GameClearDisplay();
 
@@ -72,6 +73,11 @@ public class GameManager : MonoBehaviour
 
 
             gameState = GameState.GameEnd;
+            string name = SceneManager.GetActiveScene().name;
+            if (!GameData.clearStages.Contains(name))
+            {
+                GameData.clearStages.Add(name);
+            }
             Debug.Log("GameEnd");
         }
     }
